@@ -19,7 +19,7 @@ struct TextFieldSet {
 }
 class CoolScreenSaver: ScreenSaverView {
     var words:[String] = [String]()
-    var textField: [TextFieldSet] = [TextFieldSet]()
+    var textFields: [TextFieldSet] = [TextFieldSet]()
     let linesOfLetters = 100
     override init?(frame: NSRect, isPreview: Bool) {
         super.init(frame: frame, isPreview: isPreview)
@@ -81,23 +81,22 @@ class CoolScreenSaver: ScreenSaverView {
         let ret = character.joined(separator: "\n")
         let letter = self.makeTextField(NSString(string: ret))
         let textField = TextFieldSet(x: letter.x, y: letter.y,  h: letter.h, field: letter.field, speed: letter.speed)
-        self.textField.append(textField)
+        self.textFields.append(textField)
     }
     private func updateTextPosition(){
-        for index in 0..<self.textField.count {
-            var text = self.textField[index]
+        for index in 0..<self.textFields.count {
+            var text = self.textFields[index]
             if let field = text.field{
                 if text.y! < -text.h!{
                     text.y = self.bounds.height + text.h!
                 }
                 text.y! -= text.speed!
-                self.textField[index].y = text.y!
+                self.textFields[index].y = text.y!
                 
                 field.frame = NSMakeRect(text.x!, text.y!, 20, text.h!)
                 
                 self.addSubview(field)
                 self.setNeedsDisplay(field.frame)
-                self.needsDisplay = true
             }
         }
     }
