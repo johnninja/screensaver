@@ -18,7 +18,6 @@ struct TextFieldSet {
     var speed: CGFloat?
 }
 class CoolScreenSaver: ScreenSaverView {
-    var words:[String] = [String]()
     var textFields: [TextFieldSet] = [TextFieldSet]()
     let linesOfLetters = 100
     override init?(frame: NSRect, isPreview: Bool) {
@@ -26,13 +25,10 @@ class CoolScreenSaver: ScreenSaverView {
         
         for _ in 0..<linesOfLetters {
             let str = randomString(Int(SSRandomIntBetween(10, 50)))
-            self.words.append(str)
+            self.collectTextField(str)
         }
         
         self.animationTimeInterval = 1/60
-        self.words.forEach{ word in
-            self.collectTextField(word)
-        }
     }
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
